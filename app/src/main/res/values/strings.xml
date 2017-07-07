@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Tic Tac Toe</string>
+    <string name="aboutText">TicTacToe</string>
+    <string name="ultimateText">TicTacToe</string>
+    <string name="exitText">TicTacToe</string>
+    <string name="normalText">TicTacToe</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">About Us</string>
+    <string name="size_of_board">3</string>
+    <string name="X">"   X   "</string>
+    <string name="O">"   O   "</string>
+    <string name="none">"          "</string>
+</resources>
