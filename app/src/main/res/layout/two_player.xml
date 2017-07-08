@@ -28,7 +28,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:background="@drawable/tablebackground">
+        android:background="@drawable/layout">
 
         <TableRow
             style="@style/TableRow"
@@ -46,7 +46,8 @@
             </TextView>
             <TextView
                 android:layout_column="2"
-                style="@style/RightCell">
+                style="@style/RightCell"
+                >
 
             </TextView>
 
@@ -101,19 +102,56 @@
         android:layout_height="wrap_content"
         android:text="Turn: "
         android:id="@+id/turn"
-        android:gravity="left"
+        android:gravity="center_horizontal"
         android:padding="10dp"
         android:textSize="24sp"
-        android:textColor="@color/blue"
+        android:textColor="@color/white"
         android:layout_below="@+id/mainBoard" />
 
-    <Button
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="X           VS            O"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:textSize="24sp"
+        android:gravity="center_horizontal"
+        android:layout_above="@+id/score"
+        android:layout_alignLeft="@+id/mainBoard"
+        android:id="@+id/scorelabel"
+        />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reset Match"
+        android:text="0           0            0"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:textSize="24sp"
+        android:layout_above="@+id/reset"
+        android:gravity="center_horizontal"
+        android:layout_alignLeft="@+id/mainBoard"
+        android:id="@+id/score"
+        />
+    <Button
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:background="@drawable/reset"
         android:id="@+id/reset"
+        android:layout_alignParentRight="@+id/mainmenu"
         android:layout_above="@+id/adView3"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/mainBoard"
+        />
+
+    <Button
+        android:id="@+id/mainmenu"
+        android:layout_width="130dp"
+        android:layout_height="40dp"
+        android:background="@drawable/menu"
+        android:layout_alignRight="@+id/adView3"
+        android:layout_above="@+id/adView3"
+        android:layout_alignEnd="@+id/adView3" />
+
 
     <com.google.android.gms.ads.AdView
         xmlns:ads="http://schemas.android.com/apk/res-auto"

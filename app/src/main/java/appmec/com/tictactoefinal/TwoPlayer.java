@@ -1,6 +1,7 @@
 package appmec.com.tictactoefinal;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -25,8 +26,8 @@ import com.google.android.gms.ads.MobileAds;
 
 public class TwoPlayer extends AppCompatActivity {
 
-    int[] unicode = {0x1F60A,0x1F64C,0x1F603,0x1F604,0x1F60E,0x1F61B};
-    static int index=0;
+    int[] unicode = {0x1F60A, 0x1F64C, 0x1F603, 0x1F604, 0x1F60E, 0x1F61B};
+    static int index = 0;
     private int size;
     TableLayout mainBoard;
     TextView tv_turn;
@@ -34,7 +35,7 @@ public class TwoPlayer extends AppCompatActivity {
     //rr
     char[][] dumyBoard;
     char turn;
-
+    Button menu;
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
 
@@ -42,6 +43,7 @@ public class TwoPlayer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.two_player);
+        final Context context = this;
 
         size = Integer.parseInt(getString(R.string.size_of_board));
         board = new char[size][size];
@@ -49,9 +51,19 @@ public class TwoPlayer extends AppCompatActivity {
         dumyBoard = new char[size][size];
 
 
-
         mainBoard = (TableLayout) findViewById(R.id.mainBoard);
         tv_turn = (TextView) findViewById(R.id.turn);
+        menu = (Button) findViewById(R.id.mainmenu);
+        menu.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+
+            }
+
+        });
 
         resetBoard();
         tv_turn.setText("Turn: " + turn);
@@ -137,18 +149,17 @@ public class TwoPlayer extends AppCompatActivity {
                 count_Equal2++;
         if (count_Equal1 == size || count_Equal2 == size) {
             //rr
-            if(count_Equal1==size) {
+            if (count_Equal1 == size) {
                 for (int i = 0; i < size; i++)
                     if (board[i][i] == player)
                         dumyBoard[i][i] = 'R';
-            }else{
+            } else {
                 for (int i = 0; i < size; i++)
                     if (board[i][size - 1 - i] == player)
                         dumyBoard[i][size - 1 - i] = 'R';
             }
             return true;
-        }
-        else return false;
+        } else return false;
     }
 
     protected boolean check_Row_Equality(int r, char player) {
@@ -162,11 +173,10 @@ public class TwoPlayer extends AppCompatActivity {
             //rr
             for (int i = 0; i < size; i++) {
                 if (board[r][i] == player)
-                    dumyBoard[r][i]='R';
+                    dumyBoard[r][i] = 'R';
             }
             return true;
-        }
-        else
+        } else
             return false;
     }
 
@@ -180,11 +190,10 @@ public class TwoPlayer extends AppCompatActivity {
             //rr
             for (int i = 0; i < size; i++) {
                 if (board[i][c] == player)
-                    dumyBoard[i][c]='R';
+                    dumyBoard[i][c] = 'R';
             }
             return true;
-        }
-        else
+        } else
             return false;
     }
 
@@ -207,7 +216,7 @@ public class TwoPlayer extends AppCompatActivity {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                char previousTurn=turn;
+                char previousTurn = turn;
                 if (!Cell_Set(r, c)) {
                     board[r][c] = turn;
                     if (turn == 'X') {
@@ -225,13 +234,12 @@ public class TwoPlayer extends AppCompatActivity {
                         tv_turn.setText("Game: Draw");
                         stopMatch();
                     } else {
-                        //rr
                         resultStrip(previousTurn);
-                        tv_turn.setText("Player '"+previousTurn + "' Wins !!! ");
+                        tv_turn.setText("Player '" + previousTurn + "' Wins !!! ");
                         stopMatch();
                     }
                 } else {
-                    if(tv_turn.getText().length()<=7) {
+                    if (tv_turn.getText().length() <= 7) {
                         CharSequence text = tv_turn.getText() + " Please choose a Cell Which is not already Occupied";
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(TwoPlayer.this, text, duration);
@@ -243,50 +251,40 @@ public class TwoPlayer extends AppCompatActivity {
         };
     }
 
-    public void resultStrip(char result){
-
+    public void resultStrip(char result) {
         for (int i = 0; i < mainBoard.getChildCount(); i++) {
             TableRow row = (TableRow) mainBoard.getChildAt(i);
             for (int j = 0; j < row.getChildCount(); j++) {
                 TextView tv = (TextView) row.getChildAt(j);
-                char ch=board[i][j];
-                char rsch=dumyBoard[i][j];
-                if(ch==result && rsch=='R'){
-                    tv.setText(" "+getEmojiByUnicode()+" ");
+                char ch = board[i][j];
+                char rsch = dumyBoard[i][j];
+                if (ch == result && rsch == 'R') {
+                    tv.setText(" " + getEmojiByUnicode() + " ");
                 }
             }
         }
-        if(index==5)
-            index=0;
+        if (index == 5)
+            index = 0;
         else
             index++;
     }
 
-    public String getEmojiByUnicode(){
-
+    public String getEmojiByUnicode() {
         return new String(Character.toChars(unicode[index]));
-
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_board, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(TwoPlayer.this);
-            dialog.setMessage(Html.fromHtml("<b>Developers:</b><br/><br/> Akash Doshi" + "<br/>" + "Rahul Patil"+"<br/>"+"Disha Mahajan"));
-
+            dialog.setMessage(Html.fromHtml("<b>Appmec Developers:</b><br/><br/> Email : <a>akashplaystoreapps2@gmail.com</a>"));
             dialog.show();
             return true;
         }

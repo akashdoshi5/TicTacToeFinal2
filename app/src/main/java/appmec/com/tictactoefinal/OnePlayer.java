@@ -1,5 +1,6 @@
 package appmec.com.tictactoefinal;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class OnePlayer extends AppCompatActivity {
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
     TableLayout mainBoard;
+    Button menu;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,8 +54,18 @@ public class OnePlayer extends AppCompatActivity {
         mAdView = (AdView) findViewById(R.id.adView2);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
+        final Context context = this;
+        menu = (Button) findViewById(R.id.mainmenu);
+        menu.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
 
+            }
+
+        });
     }
     protected void stopMatch() {
         for (int i = 0; i < mainBoard.getChildCount(); i++) {
@@ -73,7 +85,7 @@ public class OnePlayer extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(OnePlayer.this);
-        dialog.setMessage(Html.fromHtml("<b>Developers:</b><br/><br/> Akash Doshi" + "<br/>" + "Rahul Patil"+"<br/>"+"Disha Mahajan"));
+        dialog.setMessage(Html.fromHtml("<b>Appmec Developers:</b><br/><br/> Email : <a>akashplaystoreapps2@gmail.com</a>"));
         dialog.show();
         return true;
     }
@@ -106,7 +118,7 @@ public class OnePlayer extends AppCompatActivity {
                 c[i][j] = 2;
         }
 
-        textView.setText("Click a button to start.");
+        textView.setText("Start Game");
 
         // add the click listeners for each button
         for (i = 1; i <= 3; i++) {

@@ -1,6 +1,5 @@
 package appmec.com.tictactoefinal;
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,10 +18,10 @@ import com.google.android.gms.ads.MobileAds;
 public class MainActivity extends AppCompatActivity {
     Button button;
     Button button2;
+    Button button3;
 
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +32,21 @@ public class MainActivity extends AppCompatActivity {
 
         button = (Button) findViewById(R.id.button1);
         button2= (Button) findViewById(R.id.button2);
+        button3= (Button) findViewById(R.id.button3);
+
+        button3.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+            }
+
+        });
 
         button.setOnClickListener(new View.OnClickListener() {
 
@@ -77,17 +91,13 @@ public class MainActivity extends AppCompatActivity {
                         if(mInterstitialAd.isLoaded())
                             MainActivity.this.mInterstitialAd.show();
                     }
-                }, 75000);
+                }, 150000);
             }
-
             @Override
             public void onAdClosed() {
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
             }
         });
-
-
-
     }
 
 }
