@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Tic Tac Toe</string>
+    <string name="app_name">Tic Tac Toe - XO</string>
     <string name="aboutText">TicTacToe</string>
     <string name="ultimateText">TicTacToe</string>
     <string name="exitText">TicTacToe</string>
