@@ -27,9 +27,13 @@ import java.util.Random;
 public class OnePlayer extends AppCompatActivity {
     int c[][];
     static int index=0;
+    static int drawCount=0;
+    static int xcount = 0;
+    static int ycount = 0;
     int i, j, k = 0;
     Button b[][];
     TextView textView;
+    TextView score;
     AI ai;
     int[] unicode = {0x1F60A,0x1F64C,0x1F603,0x1F604,0x1F60E,0x1F61B};
     private AdView mAdView;
@@ -42,6 +46,8 @@ public class OnePlayer extends AppCompatActivity {
         setContentView(R.layout.one_player);
         setBoard();
         mainBoard = (TableLayout) findViewById(R.id.mainBoard);
+        score = (TextView) findViewById(R.id.score);
+        score.setText(xcount+"              "+ycount+"               "+drawCount);
         Button rstbtn = (Button) findViewById(R.id.reset);
         rstbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +91,7 @@ public class OnePlayer extends AppCompatActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder dialog = new AlertDialog.Builder(OnePlayer.this);
-        dialog.setMessage(Html.fromHtml("<b>Appmec Developers:</b><br/><br/> Email : <a>akashplaystoreapps2@gmail.com</a>"));
+        dialog.setMessage(Html.fromHtml("<b>Appmec Developers:</b><br/><br/> email : <a>akashplaystoreapps2@gmail.com</a>"));
         dialog.show();
         return true;
     }
@@ -118,9 +124,8 @@ public class OnePlayer extends AppCompatActivity {
                 c[i][j] = 2;
         }
 
-        textView.setText("Start Game");
+        textView.setText("Start Game!!!");
 
-        // add the click listeners for each button
         for (i = 1; i <= 3; i++) {
             for (j = 1; j <= 3; j++) {
                 b[i][j].setOnClickListener(new MyClickListener(i, j));
@@ -148,7 +153,6 @@ public class OnePlayer extends AppCompatActivity {
             if (b[x][y].isEnabled()) {
                 b[x][y].setEnabled(false);
                 b[x][y].setText("  O  ");
-                b[x][y].setTextColor(Color.BLACK);
                 c[x][y] = 0;
                 textView.setText("");
                 if (!checkBoard()) {
@@ -264,7 +268,6 @@ public class OnePlayer extends AppCompatActivity {
         private void markSquare(int x, int y) {
             b[x][y].setEnabled(false);
             b[x][y].setText("  X  ");
-            b[x][y].setTextColor(Color.BLACK);
             c[x][y] = 1;
             checkBoard();
         }
@@ -273,69 +276,45 @@ public class OnePlayer extends AppCompatActivity {
     private boolean checkBoard() {
         boolean gameOver = false;
         if ((c[1][1] == 0 && c[2][2] == 0 && c[3][3] == 0)){
-            textView.setText("Game over. You win!");
-            gameOver = true;
             c[1][3] = 9;
             c[2][2] = 9;
             c[3][1] = 9;
-            resultStrip();
-            stopMatch();
+            gameOver = isGameOverComputerLoss();
         }else if ((c[1][3] == 0 && c[2][2] == 0 && c[3][1] == 0)){
-            textView.setText("Game over. You win!");
-            gameOver = true;
             c[1][1] = 9;
             c[2][2] = 9;
             c[3][3] = 9;
-            resultStrip();
-            stopMatch();
+            gameOver = isGameOverComputerLoss();
         }else if ((c[1][2] == 0 && c[2][2] == 0 && c[3][2] == 0)){
-            textView.setText("Game over. You win!");
-            gameOver = true;
             c[1][2] = 9;
             c[2][2] = 9;
             c[3][2] = 9;
-            resultStrip();
-            stopMatch();
+            gameOver = isGameOverComputerLoss();
         }else if ((c[1][3] == 0 && c[2][3] == 0 && c[3][3] == 0)){
-            textView.setText("Game over. You win!");
-            gameOver = true;
             c[1][1] = 9;
             c[2][3] = 9;
             c[3][1] = 9;
-            resultStrip();
-            stopMatch();
+            gameOver = isGameOverComputerLoss();
         }else if ((c[1][1] == 0 && c[1][2] == 0 && c[1][3] == 0)){
-            textView.setText("Game over. You win!");
-            gameOver = true;
             c[1][3] = 9;
             c[1][2] = 9;
             c[1][1] = 9;
-            resultStrip();
-            stopMatch();
+            gameOver = isGameOverComputerLoss();
         }else if ((c[2][1] == 0 && c[2][2] == 0 && c[2][3] == 0)){
-            textView.setText("Game over. You win!");
             c[2][3] = 9;
             c[2][2] = 9;
             c[2][1] = 9;
-            resultStrip();
-            gameOver = true;
-            stopMatch();
+            gameOver = isGameOverComputerLoss();
         }else if ((c[3][1] == 0 && c[3][2] == 0 && c[3][3] == 0)){
-            textView.setText("Game over. You win!");
-            gameOver = true;
             c[3][3] = 9;
             c[3][2] = 9;
             c[3][1] = 9;
-            resultStrip();
-            stopMatch();
+            gameOver = isGameOverComputerLoss();
         }else if ((c[1][1] == 0 && c[2][1] == 0 && c[3][1] == 0)){
-            textView.setText("Game over. You win!");
             c[1][3] = 9;
-            c[2][1] = 9;
+            c[2][3] = 9;
             c[3][3] = 9;
-            resultStrip();
-            gameOver = true;
-            stopMatch();
+            gameOver = isGameOverComputerLoss();
 
         } else if ((c[1][1] == 1 && c[2][2] == 1 && c[3][3] == 1)){
             c[1][3] = 9;
@@ -390,13 +369,28 @@ public class OnePlayer extends AppCompatActivity {
             if(!empty) {
                 gameOver = true;
                 textView.setText("Game over. It's a draw!");
+                drawCount++;
+                score.setText(xcount+"              "+ycount+"               "+drawCount);
             }
         }
         return gameOver;
     }
 
+    private boolean isGameOverComputerLoss() {
+        boolean gameOver;
+        ycount++;
+        score.setText(xcount+"              "+ycount+"               "+drawCount);
+        textView.setText("Game over. You win!");
+        resultStrip();
+        gameOver = true;
+        stopMatch();
+        return gameOver;
+    }
+
     private boolean isGameOverComputerWin() {
         boolean gameOver;
+        xcount++;
+        score.setText(xcount+"              "+ycount+"               "+drawCount);
         textView.setText("Game over. You lost!");
         gameOver = true;
         resultStripForComputer();

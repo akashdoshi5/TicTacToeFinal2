@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.addCategory(Intent.CATEGORY_HOME);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                finish();
+                System.exit(0);
 
             }
 
@@ -91,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         if(mInterstitialAd.isLoaded())
                             MainActivity.this.mInterstitialAd.show();
                     }
-                }, 150000);
+                }, 200000);
             }
             @Override
             public void onAdClosed() {

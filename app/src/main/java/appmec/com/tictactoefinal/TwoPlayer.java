@@ -31,13 +31,15 @@ public class TwoPlayer extends AppCompatActivity {
     private int size;
     TableLayout mainBoard;
     TextView tv_turn;
+    TextView score;
+    static int drawCount=0;
+    static int xcount = 0;
+    static int ycount = 0;
     char[][] board;
-    //rr
     char[][] dumyBoard;
     char turn;
     Button menu;
     private AdView mAdView;
-    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +55,8 @@ public class TwoPlayer extends AppCompatActivity {
 
         mainBoard = (TableLayout) findViewById(R.id.mainBoard);
         tv_turn = (TextView) findViewById(R.id.turn);
+        score = (TextView) findViewById(R.id.score);
+        score.setText(xcount+"                   "+ycount+"                  "+drawCount);
         menu = (Button) findViewById(R.id.mainmenu);
         menu.setOnClickListener(new View.OnClickListener() {
 
@@ -221,20 +225,26 @@ public class TwoPlayer extends AppCompatActivity {
                     board[r][c] = turn;
                     if (turn == 'X') {
                         tv.setText(R.string.X);
-                        tv.setTextColor(Color.BLACK);
-                        turn = 'O';
+                       turn = 'O';
                     } else if (turn == 'O') {
                         tv.setText(R.string.O);
-                        tv.setTextColor(Color.BLACK);
                         turn = 'X';
                     }
                     if (gameStatus() == 0) {
                         tv_turn.setText("Turn: " + turn);
                     } else if (gameStatus() == -1) {
                         tv_turn.setText("Game: Draw");
+                        drawCount++;
+                        score.setText(xcount+"                   "+ycount+"                  "+drawCount);
                         stopMatch();
                     } else {
                         resultStrip(previousTurn);
+                                if(previousTurn == 'X'){
+                                    xcount++;
+                                }else if(previousTurn == 'O'){
+                                    ycount++;
+                                }
+                        score.setText(xcount+"                   "+ycount+"                  "+drawCount);
                         tv_turn.setText("Player '" + previousTurn + "' Wins !!! ");
                         stopMatch();
                     }
@@ -284,7 +294,7 @@ public class TwoPlayer extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             AlertDialog.Builder dialog = new AlertDialog.Builder(TwoPlayer.this);
-            dialog.setMessage(Html.fromHtml("<b>Appmec Developers:</b><br/><br/> Email : <a>akashplaystoreapps2@gmail.com</a>"));
+            dialog.setMessage(Html.fromHtml("<b>Appmec Developers:</b><br/><br/> email : <a>akashplaystoreapps2@gmail.com</a>"));
             dialog.show();
             return true;
         }

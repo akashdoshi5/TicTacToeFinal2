@@ -17,18 +17,16 @@
 -->
 
     <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="220dp"
+        android:layout_height="220dp"
         android:gravity="center"
         android:layout_gravity="top|center"
         android:clickable="true"
-        android:padding="10dp"
         android:id="@+id/mainBoard"
-        android:nestedScrollingEnabled="false"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:background="@drawable/layout">
+        android:background="@drawable/finalframe">
 
         <TableRow
             style="@style/TableRow"
@@ -101,47 +99,45 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="Turn: "
+        android:textStyle="bold"
         android:id="@+id/turn"
         android:gravity="center_horizontal"
         android:padding="10dp"
         android:textSize="24sp"
-        android:textColor="@color/white"
-        android:layout_below="@+id/mainBoard" />
-
+        android:textColor="#371B03"
+        android:layout_below="@+id/mainBoard"
+        android:layout_above="@+id/scorelabel"/>
     <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="X           VS            O"
-        android:textStyle="bold"
-        android:padding="10dp"
-        android:textSize="24sp"
-        android:gravity="center_horizontal"
-        android:layout_above="@+id/score"
-        android:layout_alignLeft="@+id/mainBoard"
         android:id="@+id/scorelabel"
-        />
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_above="@+id/score"
+        android:gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:text="Player X     Player O       Draw"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
 
     <TextView
+        android:id="@+id/score"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0           0            0"
-        android:textStyle="bold"
-        android:padding="10dp"
-        android:textSize="24sp"
+        android:layout_height="35dp"
         android:layout_above="@+id/reset"
         android:gravity="center_horizontal"
-        android:layout_alignLeft="@+id/mainBoard"
-        android:id="@+id/score"
-        />
+        android:layout_centerHorizontal="true"
+        android:text="0                   0                  0"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
     <Button
         android:layout_width="130dp"
         android:layout_height="40dp"
         android:background="@drawable/reset"
         android:id="@+id/reset"
-        android:layout_alignParentRight="@+id/mainmenu"
         android:layout_above="@+id/adView3"
-        android:layout_alignLeft="@+id/mainBoard"
-        />
+        android:layout_alignLeft="@+id/adView3"
+        android:layout_alignStart="@+id/adView3" />
 
     <Button
         android:id="@+id/mainmenu"
