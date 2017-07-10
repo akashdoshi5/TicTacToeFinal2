@@ -30,6 +30,7 @@ public class OnePlayer extends AppCompatActivity {
     static int drawCount=0;
     static int xcount = 0;
     static int ycount = 0;
+    static int adcount=0;
     int i, j, k = 0;
     Button b[][];
     TextView textView;
@@ -49,12 +50,15 @@ public class OnePlayer extends AppCompatActivity {
         score = (TextView) findViewById(R.id.score);
         score.setText(xcount+"              "+ycount+"               "+drawCount);
         Button rstbtn = (Button) findViewById(R.id.reset);
-        rstbtn.setOnClickListener(new View.OnClickListener() {
+        /*rstbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent current = getIntent();
+                finish();
+                startActivity(current);
                 setBoard();
             }
-        });
+        });*/
         MobileAds.initialize(getApplicationContext(),
                 "ca-app-pub-7860341576927713~8020931580");
         mAdView = (AdView) findViewById(R.id.adView2);
@@ -72,6 +76,22 @@ public class OnePlayer extends AppCompatActivity {
             }
 
         });
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        rstbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adcount++;
+                setBoard();
+                if (mInterstitialAd.isLoaded() && adcount%4==0) {
+                    mInterstitialAd.show();
+                }
+            }
+        });
+
     }
     protected void stopMatch() {
         for (int i = 0; i < mainBoard.getChildCount(); i++) {
@@ -292,7 +312,7 @@ public class OnePlayer extends AppCompatActivity {
             gameOver = isGameOverComputerLoss();
         }else if ((c[1][3] == 0 && c[2][3] == 0 && c[3][3] == 0)){
             c[1][1] = 9;
-            c[2][3] = 9;
+            c[2][1] = 9;
             c[3][1] = 9;
             gameOver = isGameOverComputerLoss();
         }else if ((c[1][1] == 0 && c[1][2] == 0 && c[1][3] == 0)){

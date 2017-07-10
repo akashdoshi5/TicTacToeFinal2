@@ -81,11 +81,11 @@ public class MainActivity extends AppCompatActivity {
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
-        mInterstitialAd = new InterstitialAd(this);
+        /*mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());*/
 
-        mInterstitialAd.setAdListener(new AdListener() {
+        /*mInterstitialAd.setAdListener(new AdListener() {
             public void onAdLoaded() {
                 Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAdClosed() {
                 mInterstitialAd.loadAd(new AdRequest.Builder().build());
             }
-        });
+        });*/
     }
 
 }

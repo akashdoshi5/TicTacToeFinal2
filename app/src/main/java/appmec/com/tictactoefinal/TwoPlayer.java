@@ -35,11 +35,13 @@ public class TwoPlayer extends AppCompatActivity {
     static int drawCount=0;
     static int xcount = 0;
     static int ycount = 0;
+    static int adcount=0;
     char[][] board;
     char[][] dumyBoard;
     char turn;
     Button menu;
     private AdView mAdView;
+    private InterstitialAd mInterstitialAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,9 +51,7 @@ public class TwoPlayer extends AppCompatActivity {
 
         size = Integer.parseInt(getString(R.string.size_of_board));
         board = new char[size][size];
-        //rr
         dumyBoard = new char[size][size];
-
 
         mainBoard = (TableLayout) findViewById(R.id.mainBoard);
         tv_turn = (TextView) findViewById(R.id.turn);
@@ -82,7 +82,7 @@ public class TwoPlayer extends AppCompatActivity {
         }
 
         Button rstbtn = (Button) findViewById(R.id.reset);
-        rstbtn.setOnClickListener(new View.OnClickListener() {
+   /*     rstbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent current = getIntent();
@@ -90,22 +90,49 @@ public class TwoPlayer extends AppCompatActivity {
                 startActivity(current);
             }
         });
-
+*/
         MobileAds.initialize(getApplicationContext(),
                 "ca-app-pub-7860341576927713~8020931580");
         mAdView = (AdView) findViewById(R.id.adView3);
         AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
 
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
+        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+
+        rstbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                adcount++;
+                resetBoard();
+                if (mInterstitialAd.isLoaded() && adcount%4==0) {
+                    mInterstitialAd.show();
+                }
+            }
+        });
     }
 
     protected void resetBoard() {
+        size = Integer.parseInt(getString(R.string.size_of_board));
+        board = new char[size][size];
+        dumyBoard = new char[size][size];
+
         turn = 'X';
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 board[i][j] = ' ';
             }
         }
+        for (int i = 0; i < mainBoard.getChildCount(); i++) {
+            TableRow row = (TableRow) mainBoard.getChildAt(i);
+            for (int j = 0; j < row.getChildCount(); j++) {
+                TextView tv = (TextView) row.getChildAt(j);
+                tv.setText(R.string.none);
+                tv.setOnClickListener(Move(i, j, tv));
+            }
+        }
+
     }
 
     protected int gameStatus() {
