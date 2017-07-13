@@ -103,7 +103,7 @@
         android:id="@+id/turn"
         android:gravity="center_horizontal"
         android:padding="10dp"
-        android:textSize="24sp"
+        android:textSize="24dp"
         android:textColor="#371B03"
         android:layout_below="@+id/mainBoard"
         android:layout_above="@+id/scorelabel"/>
@@ -115,7 +115,7 @@
         android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:text="Player X     Player O       Draw"
-        android:textSize="24sp"
+        android:textSize="24dp"
         android:textStyle="bold" />
 
 
@@ -127,7 +127,7 @@
         android:gravity="center_horizontal"
         android:layout_centerHorizontal="true"
         android:text="0                   0                  0"
-        android:textSize="24sp"
+        android:textSize="24dp"
         android:textStyle="bold" />
 
     <Button

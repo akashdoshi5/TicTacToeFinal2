@@ -1,11 +1,10 @@
 package appmec.com.tictactoefinal;
 
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -18,7 +17,6 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -42,6 +40,7 @@ public class TwoPlayer extends AppCompatActivity {
     Button menu;
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
+    final Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,15 +81,6 @@ public class TwoPlayer extends AppCompatActivity {
         }
 
         Button rstbtn = (Button) findViewById(R.id.reset);
-   /*     rstbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent current = getIntent();
-                finish();
-                startActivity(current);
-            }
-        });
-*/
         MobileAds.initialize(getApplicationContext(),
                 "ca-app-pub-7860341576927713~8020931580");
         mAdView = (AdView) findViewById(R.id.adView3);
@@ -104,11 +94,15 @@ public class TwoPlayer extends AppCompatActivity {
         rstbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adcount++;
                 resetBoard();
-                if (mInterstitialAd.isLoaded() && adcount%4==0) {
+                if (mInterstitialAd.isLoaded() && adcount==4) {
                     mInterstitialAd.show();
+                    mInterstitialAd = new InterstitialAd(TwoPlayer.this);
+                    mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
+                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    adcount=0;
                 }
+
             }
         });
     }
@@ -117,7 +111,7 @@ public class TwoPlayer extends AppCompatActivity {
         size = Integer.parseInt(getString(R.string.size_of_board));
         board = new char[size][size];
         dumyBoard = new char[size][size];
-
+        adcount++;
         turn = 'X';
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -132,7 +126,6 @@ public class TwoPlayer extends AppCompatActivity {
                 tv.setOnClickListener(Move(i, j, tv));
             }
         }
-
     }
 
     protected int gameStatus() {
@@ -141,7 +134,6 @@ public class TwoPlayer extends AppCompatActivity {
         //1 X Wins
         //2 O Wins
         //-1 Draw
-
         int rowX = 0, colX = 0, rowO = 0, colO = 0;
         for (int i = 0; i < size; i++) {
             if (check_Row_Equality(i, 'X'))
@@ -179,9 +171,9 @@ public class TwoPlayer extends AppCompatActivity {
             if (board[i][size - 1 - i] == player)
                 count_Equal2++;
         if (count_Equal1 == size || count_Equal2 == size) {
-            //rr
             if (count_Equal1 == size) {
                 for (int i = 0; i < size; i++)
+
                     if (board[i][i] == player)
                         dumyBoard[i][i] = 'R';
             } else {
@@ -201,7 +193,6 @@ public class TwoPlayer extends AppCompatActivity {
         }
 
         if (count_Equal == size) {
-            //rr
             for (int i = 0; i < size; i++) {
                 if (board[r][i] == player)
                     dumyBoard[r][i] = 'R';
@@ -218,7 +209,6 @@ public class TwoPlayer extends AppCompatActivity {
                 count_Equal++;
         }
         if (count_Equal == size) {
-            //rr
             for (int i = 0; i < size; i++) {
                 if (board[i][c] == player)
                     dumyBoard[i][c] = 'R';
@@ -261,6 +251,7 @@ public class TwoPlayer extends AppCompatActivity {
                         tv_turn.setText("Turn: " + turn);
                     } else if (gameStatus() == -1) {
                         tv_turn.setText("Game: Draw");
+                        showDialogBox("Game: Draw");
                         drawCount++;
                         score.setText(xcount+"                   "+ycount+"                  "+drawCount);
                         stopMatch();
@@ -273,19 +264,55 @@ public class TwoPlayer extends AppCompatActivity {
                                 }
                         score.setText(xcount+"                   "+ycount+"                  "+drawCount);
                         tv_turn.setText("Player '" + previousTurn + "' Wins !!! ");
+                        showDialogBox("Player '" + previousTurn + "' Wins !!! ");
                         stopMatch();
                     }
                 } else {
                     if (tv_turn.getText().length() <= 7) {
-                        CharSequence text = tv_turn.getText() + " Please choose a Cell Which is not already Occupied";
+                        CharSequence text = "Please choose a cell which is not already occupied!";
                         int duration = Toast.LENGTH_SHORT;
                         Toast toast = Toast.makeText(TwoPlayer.this, text, duration);
                         toast.show();
-                        tv_turn.setText(tv_turn.getText() + " Please choose a Cell Which is not already Occupied");
+                        tv_turn.setText(tv_turn.getText());
                     }
                 }
             }
         };
+    }
+
+    private void showDialogBox(String textmsg) {
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dailog_box);
+//        dialog.setCanceledOnTouchOutside(false);
+        TextView text = (TextView) dialog.findViewById(R.id.text);
+        text.setText(textmsg);
+        Button dialogPlayAgain = (Button) dialog.findViewById(R.id.dialogPlayAgain);
+        Button dialogQuit = (Button) dialog.findViewById(R.id.dialogQuit);
+
+        dialogPlayAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                resetBoard();
+                if (mInterstitialAd.isLoaded() && adcount==4) {
+                    mInterstitialAd.show();
+                    mInterstitialAd = new InterstitialAd(TwoPlayer.this);
+                    mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
+                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    adcount=0;
+                }
+                dialog.dismiss();
+            }
+        });
+
+        dialogQuit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        dialog.show();
     }
 
     public void resultStrip(char result) {

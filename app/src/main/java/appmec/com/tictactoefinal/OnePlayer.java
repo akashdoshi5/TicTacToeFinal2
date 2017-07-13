@@ -1,5 +1,6 @@
 package appmec.com.tictactoefinal;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -25,6 +27,7 @@ import com.google.android.gms.ads.MobileAds;
 import java.util.Random;
 
 public class OnePlayer extends AppCompatActivity {
+    final Context context = this;
     int c[][];
     static int index=0;
     static int drawCount=0;
@@ -50,15 +53,7 @@ public class OnePlayer extends AppCompatActivity {
         score = (TextView) findViewById(R.id.score);
         score.setText(xcount+"              "+ycount+"               "+drawCount);
         Button rstbtn = (Button) findViewById(R.id.reset);
-        /*rstbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent current = getIntent();
-                finish();
-                startActivity(current);
-                setBoard();
-            }
-        });*/
+
         MobileAds.initialize(getApplicationContext(),
                 "ca-app-pub-7860341576927713~8020931580");
         mAdView = (AdView) findViewById(R.id.adView2);
@@ -81,13 +76,17 @@ public class OnePlayer extends AppCompatActivity {
         mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
         mInterstitialAd.loadAd(new AdRequest.Builder().build());
 
+
         rstbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                adcount++;
                 setBoard();
-                if (mInterstitialAd.isLoaded() && adcount%4==0) {
+                if (mInterstitialAd.isLoaded() && adcount==4) {
                     mInterstitialAd.show();
+                    mInterstitialAd = new InterstitialAd(OnePlayer.this);
+                    mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
+                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    adcount=0;
                 }
             }
         });
@@ -122,6 +121,7 @@ public class OnePlayer extends AppCompatActivity {
         ai = new AI();
         b = new Button[4][4];
         c = new int[4][4];
+        adcount++;
 
         textView = (TextView) findViewById(R.id.dialogue);
 
@@ -182,6 +182,40 @@ public class OnePlayer extends AppCompatActivity {
         }
     }
 
+    private void showDialogBox(String textmsg) {
+        final Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.dailog_box);
+   //     dialog.setCanceledOnTouchOutside(false);
+        TextView text = (TextView) dialog.findViewById(R.id.text);
+        text.setText(textmsg);
+        Button dialogPlayAgain = (Button) dialog.findViewById(R.id.dialogPlayAgain);
+        Button dialogQuit = (Button) dialog.findViewById(R.id.dialogQuit);
+
+        dialogPlayAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setBoard();
+                if (mInterstitialAd.isLoaded() && adcount==4) {
+                    mInterstitialAd.show();
+                    mInterstitialAd = new InterstitialAd(OnePlayer.this);
+                    mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
+                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    adcount=0;
+                }
+                dialog.dismiss();
+            }
+        });
+
+        dialogQuit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        dialog.show();
+    }
 
     private class AI {
         public void takeTurn() {
@@ -389,6 +423,7 @@ public class OnePlayer extends AppCompatActivity {
             if(!empty) {
                 gameOver = true;
                 textView.setText("Game over. It's a draw!");
+                showDialogBox("Game over. It's a draw!");
                 drawCount++;
                 score.setText(xcount+"              "+ycount+"               "+drawCount);
             }
@@ -401,6 +436,7 @@ public class OnePlayer extends AppCompatActivity {
         ycount++;
         score.setText(xcount+"              "+ycount+"               "+drawCount);
         textView.setText("Game over. You win!");
+        showDialogBox("Game over. You win!");
         resultStrip();
         gameOver = true;
         stopMatch();
@@ -412,6 +448,7 @@ public class OnePlayer extends AppCompatActivity {
         xcount++;
         score.setText(xcount+"              "+ycount+"               "+drawCount);
         textView.setText("Game over. You lost!");
+        showDialogBox("Game over. You lost!");
         gameOver = true;
         resultStripForComputer();
         stopMatch();

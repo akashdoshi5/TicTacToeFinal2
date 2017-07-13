@@ -10,4 +10,5 @@
     <string name="X">"  X  "</string>
     <string name="O">"  O  "</string>
     <string name="none">"       "</string>
+    <string name="toastMsg">"Please choose a cell which is not already occupied!"</string>
 </resources>
