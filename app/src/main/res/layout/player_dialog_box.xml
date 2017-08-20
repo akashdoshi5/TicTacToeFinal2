@@ -34,7 +34,7 @@
         android:text=""
         android:hint="Player X"
         android:layout_below="@+id/text"
-        android:maxLength="7"
+        android:maxLength="8"
         android:layout_centerHorizontal="true" />
 
     <EditText
@@ -48,7 +48,7 @@
         android:gravity="center_horizontal"
         android:layout_centerInParent="true"
         android:layout_below="@+id/playerX"
-        android:maxLength="7"
+        android:maxLength="8"
         android:layout_centerHorizontal="true"
       />
 

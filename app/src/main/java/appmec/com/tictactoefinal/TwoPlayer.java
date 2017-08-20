@@ -62,7 +62,27 @@ public class TwoPlayer extends AppCompatActivity {
         score = (TextView) findViewById(R.id.score);
         score.setText(xcount+"                   "+ycount+"                  "+drawCount);
         scorelabel=(TextView) findViewById(R.id.scorelabel);
-        scorelabel.setText(MainActivity.PlayerX+"      "+MainActivity.PlayerY+"         Draw");
+        String player_x= "Player X";
+        String player_y= "Player Y";
+        if(MainActivity.PlayerX.length() != 0){
+            player_x = MainActivity.PlayerX;
+            int length = 8 - MainActivity.PlayerX.length();
+            for(int i =0; i<=length; i++){
+                    player_x = player_x + " ";
+            }
+        }
+        if(MainActivity.PlayerY.length() != 0){
+            player_y = MainActivity.PlayerY;
+            int length = 8 - MainActivity.PlayerY.length();
+            for(int i =0; i<=length; i++){
+                if(i%2 != 0 || i ==0) {
+                    player_y = " "+player_y;
+                }else{
+                    player_y = player_y + " ";
+                }
+            }
+        }
+        scorelabel.setText(player_x+"      "+player_y+"         Draw");
         menu = (Button) findViewById(R.id.mainmenu);
         menu.setOnClickListener(new View.OnClickListener() {
 
@@ -382,5 +402,12 @@ public class TwoPlayer extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
     }
 }

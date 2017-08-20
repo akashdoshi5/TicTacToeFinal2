@@ -508,9 +508,13 @@ public class OnePlayer extends AppCompatActivity {
 
     }
     public String getEmojiByUnicodeForComputer(){
-
         return new String(Character.toChars(0x1F623));
-
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(context, MainActivity.class);
+        startActivity(intent);
     }
 
 }
