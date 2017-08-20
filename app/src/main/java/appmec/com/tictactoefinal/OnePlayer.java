@@ -3,9 +3,7 @@ package appmec.com.tictactoefinal;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -16,9 +14,7 @@ import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
@@ -57,7 +53,12 @@ public class OnePlayer extends AppCompatActivity {
         MobileAds.initialize(getApplicationContext(),
                 "ca-app-pub-7860341576927713~8020931580");
         mAdView = (AdView) findViewById(R.id.adView2);
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("D8D6B049EDAB3CB2227DD36B3ED29F2D")
+                .addTestDevice("25F149879ED72631F3CB460DEED0436A")
+                .addTestDevice("B117F7C5611FB5503E6D2BD2CCA8C928")
+                .addTestDevice("5FBF995F76CDF38832A294D8A2EE7DD0")
+                .build();
         mAdView.loadAd(adRequest);
         final Context context = this;
         menu = (Button) findViewById(R.id.mainmenu);
@@ -74,7 +75,12 @@ public class OnePlayer extends AppCompatActivity {
 
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.loadAd(new AdRequest.Builder()
+                .addTestDevice("D8D6B049EDAB3CB2227DD36B3ED29F2D")
+                .addTestDevice("25F149879ED72631F3CB460DEED0436A")
+                .addTestDevice("B117F7C5611FB5503E6D2BD2CCA8C928")
+                .addTestDevice("5FBF995F76CDF38832A294D8A2EE7DD0")
+                .build());
 
 
         rstbtn.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +91,12 @@ public class OnePlayer extends AppCompatActivity {
                     mInterstitialAd.show();
                     mInterstitialAd = new InterstitialAd(OnePlayer.this);
                     mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
-                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    mInterstitialAd.loadAd(new AdRequest.Builder()
+                            .addTestDevice("D8D6B049EDAB3CB2227DD36B3ED29F2D")
+                            .addTestDevice("25F149879ED72631F3CB460DEED0436A")
+                            .addTestDevice("B117F7C5611FB5503E6D2BD2CCA8C928")
+                            .addTestDevice("5FBF995F76CDF38832A294D8A2EE7DD0")
+                            .build());
                     adcount=0;
                 }
             }
@@ -199,7 +210,12 @@ public class OnePlayer extends AppCompatActivity {
                     mInterstitialAd.show();
                     mInterstitialAd = new InterstitialAd(OnePlayer.this);
                     mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
-                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    mInterstitialAd.loadAd(new AdRequest.Builder()
+                            .addTestDevice("D8D6B049EDAB3CB2227DD36B3ED29F2D")
+                            .addTestDevice("25F149879ED72631F3CB460DEED0436A")
+                            .addTestDevice("B117F7C5611FB5503E6D2BD2CCA8C928")
+                            .addTestDevice("5FBF995F76CDF38832A294D8A2EE7DD0")
+                            .build());
                     adcount=0;
                 }
                 dialog.dismiss();

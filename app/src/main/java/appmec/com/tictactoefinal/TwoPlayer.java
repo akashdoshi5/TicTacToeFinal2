@@ -30,6 +30,8 @@ public class TwoPlayer extends AppCompatActivity {
     TableLayout mainBoard;
     TextView tv_turn;
     TextView score;
+    TextView scorelabel;
+
     static int drawCount=0;
     static int xcount = 0;
     static int ycount = 0;
@@ -56,6 +58,8 @@ public class TwoPlayer extends AppCompatActivity {
         tv_turn = (TextView) findViewById(R.id.turn);
         score = (TextView) findViewById(R.id.score);
         score.setText(xcount+"                   "+ycount+"                  "+drawCount);
+        scorelabel=(TextView) findViewById(R.id.scorelabel);
+        scorelabel.setText(MainActivity.PlayerX+"      "+MainActivity.PlayerY+"         Draw");
         menu = (Button) findViewById(R.id.mainmenu);
         menu.setOnClickListener(new View.OnClickListener() {
 
@@ -84,12 +88,23 @@ public class TwoPlayer extends AppCompatActivity {
         MobileAds.initialize(getApplicationContext(),
                 "ca-app-pub-7860341576927713~8020931580");
         mAdView = (AdView) findViewById(R.id.adView3);
-        AdRequest adRequest = new AdRequest.Builder().build();
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice("D8D6B049EDAB3CB2227DD36B3ED29F2D")
+                .addTestDevice("25F149879ED72631F3CB460DEED0436A")
+                .addTestDevice("B117F7C5611FB5503E6D2BD2CCA8C928")
+                .addTestDevice("5FBF995F76CDF38832A294D8A2EE7DD0")
+                .build();
+
         mAdView.loadAd(adRequest);
 
         mInterstitialAd = new InterstitialAd(this);
         mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
-        mInterstitialAd.loadAd(new AdRequest.Builder().build());
+        mInterstitialAd.loadAd(new AdRequest.Builder()
+                .addTestDevice("D8D6B049EDAB3CB2227DD36B3ED29F2D")
+                .addTestDevice("25F149879ED72631F3CB460DEED0436A")
+                .addTestDevice("B117F7C5611FB5503E6D2BD2CCA8C928")
+                .addTestDevice("5FBF995F76CDF38832A294D8A2EE7DD0")
+                .build());
 
         rstbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +114,12 @@ public class TwoPlayer extends AppCompatActivity {
                     mInterstitialAd.show();
                     mInterstitialAd = new InterstitialAd(TwoPlayer.this);
                     mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
-                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    mInterstitialAd.loadAd(new AdRequest.Builder()
+                            .addTestDevice("D8D6B049EDAB3CB2227DD36B3ED29F2D")
+                            .addTestDevice("25F149879ED72631F3CB460DEED0436A")
+                            .addTestDevice("B117F7C5611FB5503E6D2BD2CCA8C928")
+                            .addTestDevice("5FBF995F76CDF38832A294D8A2EE7DD0")
+                            .build());
                     adcount=0;
                 }
 
@@ -297,7 +317,12 @@ public class TwoPlayer extends AppCompatActivity {
                     mInterstitialAd.show();
                     mInterstitialAd = new InterstitialAd(TwoPlayer.this);
                     mInterstitialAd.setAdUnitId("ca-app-pub-7860341576927713/6404597587");
-                    mInterstitialAd.loadAd(new AdRequest.Builder().build());
+                    mInterstitialAd.loadAd(new AdRequest.Builder()
+                            .addTestDevice("D8D6B049EDAB3CB2227DD36B3ED29F2D")
+                            .addTestDevice("25F149879ED72631F3CB460DEED0436A")
+                            .addTestDevice("B117F7C5611FB5503E6D2BD2CCA8C928")
+                            .addTestDevice("5FBF995F76CDF38832A294D8A2EE7DD0")
+                            .build());
                     adcount=0;
                 }
                 dialog.dismiss();

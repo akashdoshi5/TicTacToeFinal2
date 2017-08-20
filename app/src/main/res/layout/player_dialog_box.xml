@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialogbox"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true">
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:textColor="#371B03"
+        android:textSize="25dp"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginRight="5dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <EditText
+        android:id="@+id/playerX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:ems="8"
+        android:inputType="textPersonName"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true"
+        android:text="Player X"
+        android:layout_below="@+id/text"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/playerO"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="8"
+        android:inputType="textPersonName"
+        android:text="Player O"
+        android:gravity="center_horizontal"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/playerX"
+        android:layout_centerHorizontal="true"
+      />
+
+    <Button
+        android:id="@+id/setPlayerName"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:background="@drawable/playagain"
+        android:layout_marginTop="13dp"
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/playerO"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"/>
+
+    <Button
+        android:id="@+id/dialogQuit"
+        android:layout_width="120dp"
+        android:layout_height="30dp"
+        android:background="@drawable/quit"
+        android:layout_marginTop="13dp"
+        android:layout_below="@+id/playerO"
+        android:layout_marginBottom="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+         />
+
+</RelativeLayout>
