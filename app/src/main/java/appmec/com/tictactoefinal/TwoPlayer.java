@@ -48,6 +48,9 @@ public class TwoPlayer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.two_player);
+
+        getSupportActionBar().setTitle("Two Player");
+
         final Context context = this;
 
         size = Integer.parseInt(getString(R.string.size_of_board));

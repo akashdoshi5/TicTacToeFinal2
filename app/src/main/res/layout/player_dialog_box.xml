@@ -55,9 +55,9 @@
     <Button
         android:id="@+id/dialogQuit"
         android:layout_width="120dp"
-        android:layout_height="30dp"
+        android:layout_height="33dp"
         android:background="@drawable/cancel"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="11dp"
         android:layout_below="@+id/playerO"
         android:layout_marginBottom="5dp"
         android:layout_alignParentLeft="true"
@@ -68,7 +68,7 @@
     <Button
         android:id="@+id/setPlayerName"
         android:layout_width="120dp"
-        android:layout_height="30dp"
+        android:layout_height="33dp"
         android:background="@drawable/update"
 
         android:layout_alignBottom="@+id/dialogQuit"

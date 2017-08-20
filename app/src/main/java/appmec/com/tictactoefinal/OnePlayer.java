@@ -44,6 +44,9 @@ public class OnePlayer extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.one_player);
+
+        getSupportActionBar().setTitle("One Player");
+
         setBoard();
         mainBoard = (TableLayout) findViewById(R.id.mainBoard);
         score = (TextView) findViewById(R.id.score);
