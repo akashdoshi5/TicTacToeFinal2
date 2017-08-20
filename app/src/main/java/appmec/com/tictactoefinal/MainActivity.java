@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         button3= (Button) findViewById(R.id.button3);
         button4= (Button) findViewById(R.id.button4);
 
-        button3.setOnClickListener(new View.OnClickListener() {
+        button4.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        button4.setOnClickListener(new View.OnClickListener() {
+        button3.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
@@ -107,10 +107,8 @@ public class MainActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.player_dialog_box);
         dialog.setCanceledOnTouchOutside(false);
         TextView text = (TextView) dialog.findViewById(R.id.text);
-        text.setText("Player Name");
         Button setPlayerName = (Button) dialog.findViewById(R.id.setPlayerName);
         Button dialogQuit = (Button) dialog.findViewById(R.id.dialogQuit);
-
 
         setPlayerName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,8 +125,7 @@ public class MainActivity extends AppCompatActivity {
         dialogQuit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, MainActivity.class);
-                startActivity(intent);
+                dialog.dismiss();
             }
         });
 
