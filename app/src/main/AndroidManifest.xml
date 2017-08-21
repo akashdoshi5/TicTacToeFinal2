@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
+        <activity android:name=".MainActivity" android:screenOrientation="portrait" android:clearTaskOnLaunch="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +20,7 @@
             android:name=".TwoPlayer" android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".OnePlayer" android:screenOrientation="portrait" >
+            android:name=".OnePlayer" android:screenOrientation="portrait">
         </activity>
     </application>
 

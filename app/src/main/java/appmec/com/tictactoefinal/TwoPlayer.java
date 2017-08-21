@@ -43,6 +43,10 @@ public class TwoPlayer extends AppCompatActivity {
     private AdView mAdView;
     private InterstitialAd mInterstitialAd;
     final Context context = this;
+    String x_name= "Player X";
+    String y_name= "Player Y";
+
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +86,8 @@ public class TwoPlayer extends AppCompatActivity {
                 }
             }
         }
+        x_name=player_x.trim();
+        y_name=player_y.trim();
         scorelabel.setText(player_x+"      "+player_y+"         Draw");
         menu = (Button) findViewById(R.id.mainmenu);
         menu.setOnClickListener(new View.OnClickListener() {
@@ -96,7 +102,6 @@ public class TwoPlayer extends AppCompatActivity {
         });
 
         resetBoard();
-        tv_turn.setText("Turn: " + turn);
 
         for (int i = 0; i < mainBoard.getChildCount(); i++) {
             TableRow row = (TableRow) mainBoard.getChildAt(i);
@@ -169,6 +174,7 @@ public class TwoPlayer extends AppCompatActivity {
                 tv.setOnClickListener(Move(i, j, tv));
             }
         }
+        tv_turn.setText("Turn: " + x_name);
     }
 
     protected int gameStatus() {
@@ -291,7 +297,10 @@ public class TwoPlayer extends AppCompatActivity {
                         turn = 'X';
                     }
                     if (gameStatus() == 0) {
-                        tv_turn.setText("Turn: " + turn);
+                        if (turn == 'X')
+                            tv_turn.setText("Turn: " + x_name);
+                        else if (turn == 'O')
+                            tv_turn.setText("Turn: " + y_name);
                     } else if (gameStatus() == -1) {
                         tv_turn.setText("Game: Draw");
                         showDialogBox("Game: Draw");
@@ -300,33 +309,38 @@ public class TwoPlayer extends AppCompatActivity {
                         stopMatch();
                     } else {
                         resultStrip(previousTurn);
-                                if(previousTurn == 'X'){
-                                    xcount++;
-                                }else if(previousTurn == 'O'){
-                                    ycount++;
-                                }
+                        if(previousTurn == 'X'){
+                            xcount++;
+                            tv_turn.setText( "'"+x_name+ "' Wins !!! ");
+                            showDialogBox( "'"+x_name+ "' Wins !!! ");
+                        }else if(previousTurn == 'O'){
+                            ycount++;
+                            tv_turn.setText( "'"+y_name+ "' Wins !!! ");
+                            showDialogBox( "'"+y_name + "' Wins !!! ");
+                        }
                         score.setText(xcount+"                   "+ycount+"                  "+drawCount);
-                        tv_turn.setText("Player '" + previousTurn + "' Wins !!! ");
-                        showDialogBox("Player '" + previousTurn + "' Wins !!! ");
                         stopMatch();
                     }
                 } else {
-                    if (tv_turn.getText().length() <= 7) {
-                        CharSequence text = "Please choose a cell which is not already occupied!";
-                        int duration = Toast.LENGTH_SHORT;
-                        Toast toast = Toast.makeText(TwoPlayer.this, text, duration);
-                        toast.show();
-                        tv_turn.setText(tv_turn.getText());
-                    }
+                    showToast("Please choose a cell which is not already occupied!");
+                    tv_turn.setText(tv_turn.getText());
                 }
             }
         };
     }
 
+    private void showToast(String msg){
+        if(toast != null)
+        {
+            toast.cancel();
+        }
+        toast = Toast.makeText(TwoPlayer.this, msg, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
     private void showDialogBox(String textmsg) {
         final Dialog dialog = new Dialog(context);
         dialog.setContentView(R.layout.dailog_box);
-//        dialog.setCanceledOnTouchOutside(false);
         TextView text = (TextView) dialog.findViewById(R.id.text);
         text.setText(textmsg);
         Button dialogPlayAgain = (Button) dialog.findViewById(R.id.dialogPlayAgain);
